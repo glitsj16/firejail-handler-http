@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Firejail :: HTTP(S) URL Handler
+Comment=Manage Firejail HTTP(S) URL drop files via xdg-open wrapper
+Exec=sh -c "firejail-handler-http-ctl > /dev/null 2>&1 &"
+Terminal=false
+Type=Application
+NoDisplay=true
