@@ -1,0 +1,39 @@
+#!/bin/sh
+#
+## HTTP(S) URL handler for Firejail
+#+ custom `xdg-open` wrapper
+
+## IMPORTANT ##############################################
+#+ install this file as /usr/local/bin/xdg-open to ensure the wrapper works as expected
+#########################################################
+
+# shellcheck disable=SC2154
+
+### vars
+# source common settings
+. "firejail-handler-settings-http.inc"
+
+_selfie="$(basename "$0")"
+
+
+### logic
+
+# debug
+if [ "$_debug" = 1 ]; then
+    echo "$@" > "${_drop_dir}/${_selfie}.log"
+    exit 0
+fi
+
+## triage
+case "$1" in
+    http://*|https://*)
+        #+ regular HTTP(S) traffic goes to running browser
+        "$_browser_bin" "$1" &
+        ;;
+    *)
+        #+ all other traffic goes to system-wide xdg-open
+        /usr/bin/xdg-open "$@" &
+        ;;
+esac
+
+exit 0
