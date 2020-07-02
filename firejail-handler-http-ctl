@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+## HTTP(S) URL handler for Firejail
+#+ uses inotifywait to watch HTTP(S) URL drop file activity from outside the sandbox
+#+ and relays the URL to a configured web browser via a custom xdg-open wrapper
+
+# shellcheck disable=SC2154
+
+### vars
+# source common settings
+. "firejail-handler-settings-http.inc"
+
+
+### logic
+# ensure dropzone exists
+[ ! -d "$_drop_dir" ] && mkdir -p "$_drop_dir"
+
+# ensure needed commands are available
+for _cmd in "inotifywait" "xdg-open"; do
+    if [ ! -x "/usr/bin/${_cmd}" ]; then
+	echo "Command not found: /usr/bin/${_cmd} - aborting"
+	exit 1
+    fi
+done
+for _cmd in "$_browser_bin" "$_xdg_open_wrapper_bin"; do
+    if [ ! -x "$_cmd" ]; then
+	echo "Command not found: ${_cmd} - aborting"
+	exit 1
+    fi
+done
+
+
+# watch drop file for modifications
+[ -e "$_drop_file" ] && rm -f "$_drop_file"
+touch "$_drop_file"
+inotifywait -m -e modify --format '%f' "$_drop_file" | while read -r
+do
+    if [ -s "$_drop_file" ]; then
+	# get URL
+	_url="$(head -n 1 "$_drop_file")"
+	# open URL
+	"$_xdg_open_wrapper_bin" "$_url"
+	# reset
+	truncate -s 0 "$_drop_file"
+    fi
+done
+
+exit 0
