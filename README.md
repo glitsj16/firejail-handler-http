@@ -9,7 +9,9 @@ The scripts in this repository implement a more user-friendly - still fully secu
 
 ## Installing
 
-Ensure the following dependencies are installed:
+Arch Linux users can install from the AUR: [firejail-handler-http](https://aur.archlinux.org/packages/firejail-handler-http/).
+
+On other distributions you'll need the following dependencies:
 
 	* firejail
 	* inotify-tools
