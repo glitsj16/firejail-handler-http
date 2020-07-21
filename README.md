@@ -27,7 +27,7 @@ $ sudo install -Dm755 ./firejail-handler-http /usr/bin/firejail-handler-http
 $ sudo install -Dm755 ./firejail-handler-http-ctl /usr/bin/firejail-handler-http-ctl
 $ sudo install -Dm644 ./firejail-handler-settings-http.inc /usr/bin/firejail-handler-settings-http.inc
 $ sudo install -Dm755 ./firejail-xdg-open /usr/local/bin/xdg-open
-$ sudo install -Dm644 ./firejail-handler-http.desktop /etc/xdg/autostart/firejail-handler-http.desktop
+$ sudo install -Dm644 ./firejail-handler-http-ctl.desktop /etc/xdg/autostart/firejail-handler-http-ctl.desktop
 `````
 
 ## Usage
