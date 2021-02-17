@@ -18,8 +18,22 @@ _debug=0
 
 ## dropzone location where the URL data will be saved temporarily
 #+ IMPORTANT: this needs to be read/write accessible in the sandbox
-#+ ~/Downloads can be assumed to be a supported location
-_drop_dir="${HOME}/Downloads/.firejail-dropzone"
+# follow XDG specifications and fallback to hardcoded drop dir location
+# https://github.com/glitsj16/firejail-handler-http/issues/3
+if [ "$(which xdg-user-dir)" ]; then
+    _drop_dir="$(which xdg-user-dir DOWNLOAD)"
+else
+    _xdg_config_home="$(env | grep -c "XDG_CONFIG_HOME")"
+    if [ "$_xdg_config_home" = 1 ]; then
+	if [ -s "${XDG_CONFIG_HOME}/.config/user-dirs.dirs" ]; then
+	    _drop_dir="$(grep "^XDG_DOWNLOAD_DIR=" "${XDG_CONFIG_HOME}/.config/user-dirs.dirs" | awk '{split($0,a,"="); print a[2]}' | sed 's/"//g')"
+	fi
+    elif [ -s "${HOME}/.config/user-dirs.dirs" ]; then
+	_drop_dir="$(grep "^XDG_DOWNLOAD_DIR=" "${HOME}/.config/user-dirs.dirs" | awk '{split($0,a,"="); print a[2]}' | sed 's/"//g')"
+    else
+	_drop_dir="${HOME}/Downloads/.firejail-dropzone"
+    fi
+fi
 _drop_file="${_drop_dir}/firejail.drop"
 
 ## xdg-open wrapper path
