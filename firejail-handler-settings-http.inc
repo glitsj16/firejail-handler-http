@@ -31,9 +31,10 @@ else
     elif [ -s "${HOME}/.config/user-dirs.dirs" ]; then
 	_drop_dir="$(grep "^XDG_DOWNLOAD_DIR=" "${HOME}/.config/user-dirs.dirs" | awk '{split($0,a,"="); print a[2]}' | sed 's/"//g')"
     else
-	_drop_dir="${HOME}/Downloads/.firejail-dropzone"
+	_drop_dir="${HOME}/Downloads"
     fi
 fi
+_drop_dir="${_drop_dir}/.firejail-dropzone"
 _drop_file="${_drop_dir}/firejail.drop"
 
 ## xdg-open wrapper path
