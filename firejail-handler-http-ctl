@@ -12,7 +12,7 @@
 
 
 ### logic
-# ensure dropzone exists
+# ensure drop location exists
 [ ! -d "$_drop_dir" ] && mkdir -p "$_drop_dir"
 
 # ensure needed commands are available
