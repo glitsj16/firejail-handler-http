@@ -33,7 +33,7 @@ done
 # watch drop file for modifications
 [ -e "$_drop_file" ] && rm -f "$_drop_file"
 touch "$_drop_file"
-inotifywait -m -e modify --format '%f' "$_drop_file" | while read -r
+inotifywait -m -e modify --format '%f' "$_drop_file" | while read -r line
 do
     if [ -s "$_drop_file" ]; then
 	# get URL
