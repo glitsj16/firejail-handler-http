@@ -22,7 +22,7 @@ elif [ -f "/etc/firejail/${_settings_file}" ]; then
     #+ use system-wide settings
     . "/etc/firejail/${_settings_file}"
 else
-    #+ fall back to hardcoded values
+    #+ fall back to hard-coded values
     _browser_bin="/usr/bin/firefox"
     _debug=0
     if [ "$(which xdg-user-dir)" ]; then
