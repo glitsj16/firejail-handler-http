@@ -13,8 +13,36 @@
 [ -z "$1" ] && exit 1
 
 ### vars
-# source common settings
-. "firejail-handler-settings-http.inc"
+## source common settings
+_settings_file="firejail-handler-settings-http.inc"
+if [ -f "${HOME}/.config/firejail/${_settings_file}" ]; then
+    #+ use settings defined by user
+    . "${HOME}/.config/firejail/${_settings_file}"
+elif [ -f "/etc/firejail/${_settings_file}" ]; then
+    #+ use system-wide settings
+    . "/etc/firejail/${_settings_file}"
+else
+    #+ fall back to hardcoded values
+    _browser_bin="/usr/bin/firefox"
+    _debug=0
+    if [ "$(which xdg-user-dir)" ]; then
+	_drop_dir="$(which xdg-user-dir DOWNLOAD)"
+    else
+	_xdg_config_home="$(env | grep -c "XDG_CONFIG_HOME")"
+	if [ "$_xdg_config_home" = 1 ]; then
+	    if [ -s "${XDG_CONFIG_HOME}/.config/user-dirs.dirs" ]; then
+		_drop_dir="$(grep "^XDG_DOWNLOAD_DIR=" "${XDG_CONFIG_HOME}/.config/user-dirs.dirs" | awk '{split($0,a,"="); print a[2]}' | sed 's/"//g')"
+	    fi
+	elif [ -s "${HOME}/.config/user-dirs.dirs" ]; then
+	    _drop_dir="$(grep "^XDG_DOWNLOAD_DIR=" "${HOME}/.config/user-dirs.dirs" | awk '{split($0,a,"="); print a[2]}' | sed 's/"//g')"
+	else
+	    _drop_dir="${HOME}/Downloads"
+	fi
+    fi
+    _drop_dir="${_drop_dir}/.firejail-dropzone"
+    _drop_file="${_drop_dir}/firejail.drop"
+    _xdg_open_wrapper_bin="/usr/local/bin/xdg-open"
+fi
 
 
 ### logic
