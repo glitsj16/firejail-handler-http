@@ -15,7 +15,7 @@ On other distributions you'll need the following dependencies:
 
 	* firejail
 	* inotify-tools
-	* a supported web browser
+	* a web browser with a working firejail profile
 	* xdg-utils
 
 Clone the source code from the Git repository and install manually:
@@ -25,10 +25,15 @@ $ git clone https://github.com/glitsj16/firejail-handler-http.git
 $ cd firejail-handler-http
 $ sudo install -Dm755 ./firejail-handler-http /usr/bin/firejail-handler-http
 $ sudo install -Dm755 ./firejail-handler-http-ctl /usr/bin/firejail-handler-http-ctl
-$ sudo install -Dm644 ./firejail-handler-settings-http.inc /usr/bin/firejail-handler-settings-http.inc
+$ sudo install -Dm644 ./firejail-handler-settings-http.inc /etc/firejail/firejail-handler-settings-http.inc
 $ sudo install -Dm755 ./firejail-xdg-open /usr/local/bin/xdg-open
 $ sudo install -Dm644 ./firejail-handler-http-ctl.desktop /etc/xdg/autostart/firejail-handler-http-ctl.desktop
 `````
+
+
+## Settings
+
+The scripts will look for user-provided settings in `~/.config/firejail/firejail-handler-settings-http.inc` first. If that file does not exist it will try `/etc/firejail/firejail-handler-settings-http.inc`. Finally, if none of these locations exist, hard-coded defaults will be used.
 
 ## Usage
 
