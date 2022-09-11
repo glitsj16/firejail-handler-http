@@ -37,8 +37,8 @@ The scripts will look for user-provided settings in `~/.config/firejail/firejail
 
 ## Usage
 
-- (1) Configure your firejailed application(s) to use `firejail-handler-http` as web browser.
-- (2) If the relevant firejail profile has the private-bin option, you will have to make sure
+- Configure your firejailed application(s) to use `firejail-handler-http` as web browser.
+- If the relevant firejail profile has the private-bin option, you will have to make sure
 to add everything that's needed for the handler script to work inside the sandbox.
 The easiest way to achieve this is by creating a ~/.config/firejail/foo.local override
 and take care of the additional private-bin commands there.
