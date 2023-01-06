@@ -1,5 +1,13 @@
 # HTTP(S) URL handler for Firejail
 
+UPDATE (2023/01/06): There's been active and ongoing discussions in the Firejail team on how to improve/implement inter-sandbox URL handling for hyperlinks. Here's the main ones:
+- [The firejail URL open game: Level fireurl unlocked](https://github.com/netblue30/firejail/pull/5574)
+- [Allow opening hyperlinks](https://github.com/netblue30/firejail/discussions/5566)
+
+Although the technique used here still works I believe now's the time to archive this repository and move on. Interested people can use [fireurl](https://github.com/rusty-snake/fireurl), which might even get integrated in Firejail in an upcoming release.
+
+= = =
+
 [Firejail](https://github.com/netblue30/firejail) is a SUID sandbox program that reduces the risk of security breaches by restricting the running environment of untrusted applications using Linux namespaces, seccomp-bpf
 and Linux capabilities. It allows a process and all its descendants to have their own private view of the globally shared kernel resources, such as the network stack, process table, mount table. Firejail can work in a SELinux or AppArmor environment, and it is integrated with Linux Control Groups.
 
